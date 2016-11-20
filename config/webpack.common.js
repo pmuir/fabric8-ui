@@ -18,6 +18,7 @@ const HtmlElementsPlugin = require('./html-elements-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const WebpackLighthousePlugin = require('webpack-lighthouse-plugin');
 
 /*
  * Webpack Constants
@@ -148,6 +149,7 @@ module.exports = function (options) {
           test: /\.scss$/,
           loaders: ["css-to-string", "css", "sass"]
         },
+        
       ],
 
     },
@@ -271,6 +273,15 @@ module.exports = function (options) {
        * See: https://gist.github.com/sokra/27b24881210b56bbaff7
        */
       new LoaderOptionsPlugin({}),
+
+      /**
+       * See https://github.com/googlechrome/lighthouse and https://github.com/addyosmani/webpack-lighthouse-plugin
+       * 
+       * TODO: This should really be run during the build pipeline
+       */
+      new WebpackLighthousePlugin({
+        url: 'http://locahost:3000'
+      }),
 
     ],
 
