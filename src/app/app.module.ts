@@ -1,5 +1,6 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { WorkerAppModule } from '@angular/platform-webworker';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
@@ -37,6 +38,7 @@ export type StoreType = {
     FormsModule,
     HomeModule,
     HttpModule,
+    WorkerAppModule,
     AppRoutingModule
   ],
   declarations: [
