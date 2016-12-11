@@ -62,11 +62,8 @@ module.exports = function (options) {
      * See: http://webpack.github.io/docs/configuration.html#entry
      */
     entry: {
-      'polyfills': './src/polyfills.browser.ts',
-      'vendor': './src/vendor.browser.ts',
-      // 'main': aotMode ? './src/main.browser.aot.ts' : './src/main.browser.ts'
-      'main': './src/main.browser.ts',
-      'webworker': ['./src/webworker.browser.ts']
+      'app': [ './src/polyfills.browser.ts', './src/vendor.browser.ts', './src/main.browser.ts' ],
+      'webworker': [ './src/polyfills.browser.ts', './src/vendor.browser.ts', './src/main.webworker.ts' ]
     }, 
 
     /*
@@ -157,10 +154,10 @@ module.exports = function (options) {
         },
         {
           test: /\.scss$/,
-          loaders: ["css-to-string", "css", "sass"]
+          loaders: ["css-to-string-loader", "css-loader", "sass-loader"]
         },
         {
-          test: /manifest.json$/,
+          test: /manifest\.json$/,
           loader: 'file-loader?name=manifest.json!web-app-manifest-loader'
         }
       ]
@@ -246,6 +243,7 @@ module.exports = function (options) {
        */
       new HtmlWebpackPlugin({
         template: 'src/index.html',
+        excludeChunks: [ 'webworker' ],
         title: METADATA.title,
         chunksSortMode: 'dependency',
         metadata: METADATA,
