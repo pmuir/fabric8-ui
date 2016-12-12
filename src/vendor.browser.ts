@@ -20,6 +20,8 @@ import '@angularclass/hmr';
 // RxJS
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
 
 if ('production' === ENV) {
   // Production

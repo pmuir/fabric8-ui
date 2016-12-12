@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://fabric8.io/extensions/manifest.schema.json", 
+    "title": "Fabric8 Extension Manifest",
+    "description": "An extension for Fabric8",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The id is expressed using camelcase. Dashes (-) and underscores (_) will be converted to camelcase. By default, if the url of this file is foo://bar/baz/<extension>/<extension>.manifest.json, id is <extension>.",
+            "type": "string"
+        },
+        "label": {
+            "description": "A short label, used in menus etc. By default, label is the <id> with the camel case expanded to add spaces, and the initial letter capitalized.",
+            "type": "string"
+        },
+        "description": {
+            "description": "A longer description, which can be markdown, used to describe the extension. By default, empty.",
+            "type": "string"
+        },
+        "path": {
+            "description": "The path (as an HTML5 route) that is used to access this extension. By default, the id, with the camelcase replaced by dashes and lowercase letters.",
+            "type": "string"
+        },
+        "icon": {
+            "description": "URL of an png file to use for this extension (16 x 16) as an icon. By default, the Fabric8 icon is used. If a file <extension>/<extension>.icon16.png exists, it will be used.",
+            "type": "string",
+            "format": "uri"
+        },
+        "moduleFile": {
+            "description": "The relative path of the extension module file. By default, the file <extension>/<extension>.module.ts#<Extension> is used (where <Extension> is the id with the first letter capitalized)."
+        }
+    }
+}

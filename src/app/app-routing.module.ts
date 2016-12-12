@@ -40,6 +40,10 @@ export const routes: Routes = [
     loadChildren: './+detail/detail.module#DetailModule'
   },
   {
+    path: 'sample2',
+    loadChildren: './sample2/sample2.module#Sample2Module'
+  },
+  {
     path: '**',
     // loadChildren: loadChildrenNoConent
     // loadChildren: '../../aot/app/no-content/no-content.module.ngfactory#NoContentModuleNgFactory'

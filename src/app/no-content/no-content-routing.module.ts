@@ -2,6 +2,8 @@ import { NgModule }  from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NoContentComponent } from './no-content.component';
+import { Extensions }           from '../extensions.service';
+
 
 console.log('`No-content` bundle loaded');
 

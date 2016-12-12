@@ -5,12 +5,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 import { AppState } from './app.service';
 
+import { Extensions } from './extensions.service';
+
 /*
  * App Component
  * Top Level Component
  */
 @Component({
   selector: 'app',
+  providers: [ Extensions ],
   encapsulation: ViewEncapsulation.None,
   styleUrls: [ './app.component.scss' ],
   templateUrl: './app.component.html'
@@ -21,12 +24,13 @@ export class AppComponent {
   url = 'https://twitter.com/AngularClass';
 
   constructor(
-    public appState: AppState) {
+    public appState: AppState, public extensions: Extensions) {
 
   }
 
   ngOnInit() {
     console.log('Initial App State', this.appState.state);
+    this.extensions.load();
   }
 
 }

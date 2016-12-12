@@ -1,0 +1,4 @@
+{
+    "$schema" : "../../manifest.schema.json",
+    "description" : "A _sample_ extension."    
+}

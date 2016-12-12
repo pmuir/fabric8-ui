@@ -1,0 +1,6 @@
+{
+    "description" : "A simple extension registry. Each extension is expressed as a relative path. If the relative path ends in '.manifest.json' it is assumed it is a file, otherwise it is assumed it is a directory",
+    "extensions" : [
+        "sample2"
+    ]
+}

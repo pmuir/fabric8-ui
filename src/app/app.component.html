@@ -22,11 +22,21 @@
           About
         </a>
       </span>
+  <span *ngFor="let ext of extensions.loaded">
+      | 
+      <span>
+        <a [routerLink]=" [ext.path] ">
+          {{ ext.label }}
+        </a>
+      </span>
+  </span>
 </nav>
 
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<button (click)="extensions.load()">Load Routes</button>
 
 <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
 
