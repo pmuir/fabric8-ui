@@ -8,8 +8,7 @@ import { LoginComponent } from './login/login.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: './home/home.module#HomeModule'
   },
   {
     path: 'login',
@@ -36,7 +35,7 @@ export const routes: Routes = [
     loadChildren: './overview/overview.module#OverviewModule'
   },
   {
-    path: 'profile',
+    path: 'pmuir',
     loadChildren: './profile/profile.module#ProfileModule'
   },
   {
