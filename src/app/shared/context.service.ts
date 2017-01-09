@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Context } from './../models/context';
 import { DummyService } from './../dummy/dummy.service';
 import { Broadcaster } from '../shared/broadcaster.service';
+
+import 'rxjs/add/operator/switchMap';
+
 
 
 /*
@@ -18,7 +21,8 @@ export class ContextService {
   constructor(
     private dummy: DummyService,
     private router: Router,
-    private broadcaster: Broadcaster
+    private broadcaster: Broadcaster,
+    private route: ActivatedRoute
   ) {
     // Listen for any context refreshes requested by the app
     this.broadcaster.on<string>('refreshContext').subscribe(message => {
@@ -30,6 +34,21 @@ export class ContextService {
 
   get current(): Context {
     return this._current;
+  }
+
+  computeContext2(route: ActivatedRoute) {
+    console.log('Computing context');
+    route.params
+      .switchMap((params: Params) => this.getContext(params['entity'], params['space']))
+      .subscribe((ctx: Context) => this._current = ctx)
+      ;
+  }
+
+  private getContext(entity: String, space: String): Promise<Context> {
+    console.log('entity: ' + entity + '; space: ' + space + ';');
+    return new Promise((resolve, reject) => {
+        resolve(this._current);
+      });
   }
 
   private computeContext() {

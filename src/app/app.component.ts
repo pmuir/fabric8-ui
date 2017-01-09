@@ -2,8 +2,10 @@
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AppState } from './app.service';
+import { ContextService } from './shared/context.service';
 
 /*
  * App Component
@@ -21,11 +23,16 @@ export class AppComponent {
   url = 'https://twitter.com/AngularClass';
 
   constructor(
-    public appState: AppState) {
-
+    private appState: AppState,
+    private route: ActivatedRoute,
+    private router: Router,
+    private context: ContextService) {
   }
 
   ngOnInit() {
+    this.router.events.subscribe((val) => {
+      this.context.computeContext2(this.route);
+    });
   }
 
 }

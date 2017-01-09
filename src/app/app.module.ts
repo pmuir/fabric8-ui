@@ -49,6 +49,10 @@ import { SigninComponent } from './signin/signin.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 
+// Entity & Space
+import { EntityComponent } from './entity/entity.component';
+import { SpaceComponent } from './space/space.component';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -85,7 +89,9 @@ export type StoreType = {
     FooterComponent,
     HeaderComponent,
     LoginComponent,
-    SigninComponent
+    SigninComponent,
+    EntityComponent,
+    SpaceComponent
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
