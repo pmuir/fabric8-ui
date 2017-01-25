@@ -1,3 +1,5 @@
+import { EntityComponent } from './entity/entity.component';
+import { SpaceComponent } from './space/space.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -70,7 +72,7 @@ export const routes: Routes = [
   // Parameterized <Entity> route
   // Must be the last item in the routing table, as this essentially acts as a "fallback route"
   {
-    path: ':entity',
+    path: 'pmuir',
     children: [
       // Profile
       {

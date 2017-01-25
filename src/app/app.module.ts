@@ -48,6 +48,8 @@ import { DeleteAccountDialogModule } from './delete-account-dialog/delete-accoun
 import { SigninComponent } from './signin/signin.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { SpaceComponent } from './space/space.component';
+import { EntityComponent } from './entity/entity.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -85,7 +87,9 @@ export type StoreType = {
     FooterComponent,
     HeaderComponent,
     LoginComponent,
-    SigninComponent
+    SigninComponent,
+    EntityComponent,
+    SpaceComponent
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
