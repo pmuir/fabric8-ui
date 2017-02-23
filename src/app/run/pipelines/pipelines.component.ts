@@ -5,7 +5,7 @@ import { Router }            from '@angular/router';
 @Component({
   selector: 'alm-pipelines',
   templateUrl: 'pipelines.component.html',
-  styleUrls: ['./pipelines.component.scss']
+  styleUrls: [/* Uncomment when styles are added './pipelines.component.scss'*/]
 })
 export class PipelinesComponent implements OnInit {
 

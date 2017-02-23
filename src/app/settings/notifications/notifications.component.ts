@@ -12,7 +12,7 @@ interface NotificationMethod {
 @Component({
   selector: 'alm-notifications',
   templateUrl: 'notifications.component.html',
-  styleUrls: ['./notifications.component.scss']
+  styleUrls: [/* Uncomment when styles are added './notifications.component.scss'*/]
 })
 export class NotificationsComponent implements OnInit {
 

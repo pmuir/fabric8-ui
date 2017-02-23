@@ -5,7 +5,7 @@ import { Router }            from '@angular/router';
 @Component({
   selector: 'alm-alerts',
   templateUrl: 'alerts.component.html',
-  styleUrls: ['./alerts.component.scss']
+  styleUrls: [/* Uncomment when styles are added './alerts.component.scss'*/]
 })
 export class AlertsComponent implements OnInit {
 

@@ -5,7 +5,7 @@ import { Router }            from '@angular/router';
 @Component({
   selector: 'alm-security',
   templateUrl: 'security.component.html',
-  styleUrls: ['./security.component.scss']
+  styleUrls: [/* Uncomment when styles are added './security.component.scss'*/]
 })
 export class SecurityComponent implements OnInit {
 

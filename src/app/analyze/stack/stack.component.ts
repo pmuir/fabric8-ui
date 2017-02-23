@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'alm-stack',
   templateUrl: 'stack.component.html',
-  styleUrls: ['./stack.component.scss']
+  styleUrls: [/* Uncomment when styles are added './stack.component.scss'*/]
 })
 export class StackComponent implements OnInit {
 

@@ -8,7 +8,7 @@ import { ProfileService } from './../../profile/profile.service';
 @Component({
   selector: 'alm-profile',
   templateUrl: 'profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: [/* Uncomment when styles are added './profile.component.scss'*/]
 })
 export class ProfileComponent implements OnInit {
 

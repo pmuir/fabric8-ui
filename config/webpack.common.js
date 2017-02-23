@@ -43,7 +43,7 @@ const scssIncludePaths = [
  */
 module.exports = function (options) {
   const isProd = options.env === 'production';
-  const aotMode = false;//options && options.aot !== undefined;
+  const aotMode = false; //options && options.aot !== undefined;
   console.log('The options from the webpack config: ' + JSON.stringify(options, null, 2));
   console.log(scssIncludePaths);
   // const entryFile = aotMode ? './src/main.browser.aot.ts' : './src/main.browser.ts';
@@ -152,7 +152,18 @@ module.exports = function (options) {
          */
         {
           test: /\.css$/,
-          loaders: ['to-string-loader', 'css-loader']
+          loaders: [
+            { loader: "css-to-string-loader" },
+            {
+              loader: "style-loader"
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true
+              }
+            },
+          ],
         },
 
         {
@@ -161,11 +172,15 @@ module.exports = function (options) {
             {
               loader: 'css-to-string'
             }, {
-              loader: 'css-loader'
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
             }, {
               loader: 'sass-loader',
               options: {
-                includePaths: scssIncludePaths
+                includePaths: scssIncludePaths,
+                sourceMap: true
               }
             }
           ]
@@ -198,10 +213,6 @@ module.exports = function (options) {
 
         /* File loader for supporting images, for example, in CSS files.
          */
-        {
-          test: /\.(jpg|png|gif)$/,
-          loader: 'file'
-        },
         {
           test: /manifest.json$/,
           loader: 'file-loader?name=manifest.json!web-app-manifest-loader'
@@ -276,6 +287,16 @@ module.exports = function (options) {
         to: 'assets'
       }, {
         from: 'src/meta'
+      }, {
+        ignore: [
+          // Doesn't copy any files with a scss and js extensions
+          '*.scss', '*.js'
+        ],
+
+        // By default, we only copy modified files during
+        // a watch or webpack-dev-server build. Setting this
+        // to `true` copies all files.
+        copyUnmodified: true
       }]),
 
 

@@ -5,7 +5,7 @@ import { Router }            from '@angular/router';
 @Component({
   selector: 'alm-plan',
   templateUrl: 'plan.component.html',
-  styleUrls: ['./plan.component.scss']
+  styleUrls: [/* Uncomment when styles are added './plan.component.scss'*/]
 })
 export class PlanComponent implements OnInit {
 

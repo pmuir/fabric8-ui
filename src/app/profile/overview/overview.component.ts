@@ -8,7 +8,7 @@ import { DummyService } from './../../shared/dummy.service';
 @Component({
   selector: 'alm-overview',
   templateUrl: 'overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  styleUrls: [/* Uncomment when styles are added './overview.component.scss'*/]
 })
 export class OverviewComponent implements OnInit {
 

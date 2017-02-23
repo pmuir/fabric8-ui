@@ -8,7 +8,7 @@ import { ContextService } from './../../../shared/context.service';
 @Component({
   selector: 'alm-stack',
   templateUrl: 'stack-overview.component.html',
-  styleUrls: ['./stack-overview.component.scss']
+  styleUrls: [/* Uncomment when styles are added './stack-overview.component.scss'*/]
 })
 export class StackOverviewComponent implements OnInit {
 

@@ -5,7 +5,7 @@ import { Router }            from '@angular/router';
 @Component({
   selector: 'alm-settingsOverview',
   templateUrl: 'settings-overview.component.html',
-  styleUrls: ['./settings-overview.component.scss']
+  styleUrls: [/* Uncomment when styles are added './settings-overview.component.scss'*/]
 })
 export class SettingsOverviewComponent implements OnInit {
 
@@ -14,7 +14,7 @@ export class SettingsOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
 }

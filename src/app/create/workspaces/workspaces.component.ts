@@ -5,7 +5,7 @@ import { Router }            from '@angular/router';
 @Component({
   selector: 'alm-workspaces',
   templateUrl: 'workspaces.component.html',
-  styleUrls: ['./workspaces.component.scss']
+  styleUrls: [/* Uncomment when styles are added './workspaces.component.scss'*/]
 })
 export class WorkspacesComponent implements OnInit {
 
