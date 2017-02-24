@@ -5,6 +5,7 @@
 const webpack = require('webpack');
 const helpers = require('./helpers');
 const ngtools = require('@ngtools/webpack');
+var path = require('path');
 
 /*
  * Webpack Plugins
@@ -31,6 +32,10 @@ const METADATA = {
   isDevServer: helpers.isWebpackDevServer()
 };
 
+const scssIncludePaths = [
+  "/c/Users/pmuir/go/src/github.com/fabric8io/fabric8-ui/node_modules/bootstrap-sass/assets/stylesheets/"
+];
+
 /*
  * Webpack configuration
  *
@@ -40,12 +45,13 @@ module.exports = function (options) {
   const isProd = options.env === 'production';
   const aotMode = false;//options && options.aot !== undefined;
   console.log('The options from the webpack config: ' + JSON.stringify(options, null, 2));
+  console.log(scssIncludePaths);
   // const entryFile = aotMode ? './src/main.browser.aot.ts' : './src/main.browser.ts';
   // const outPath = aotMode ? 'dist' : 'aot';
   // const devtool = aotMode ? 'source-map' : 'eval-source-map';
   // const srcPath = path.join(__dirname, 'demo', 'src');
   var config = {
-  // return {
+    // return {
 
     /*
      * Cache generated modules and chunks to improve performance for multiple incremental builds.
@@ -109,11 +115,11 @@ module.exports = function (options) {
           loaders: aotMode ? [
             '@ngtools/webpack'
           ] : [
-            '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
-            'awesome-typescript-loader',
-            'angular2-template-loader',
-            'angular2-router-loader'
-          ],
+              '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
+              'awesome-typescript-loader',
+              'angular2-template-loader',
+              'angular2-router-loader'
+            ],
           // loaders: '@ngtools/webpack',
           exclude: [/\.(spec|e2e)\.ts$/]
         },
@@ -151,31 +157,42 @@ module.exports = function (options) {
 
         {
           test: /\.scss$/,
-          loaders: ["css-to-string", "css-loader", "sass-loader"]
+          loaders: [
+            {
+              loader: 'css-to-string'
+            }, {
+              loader: 'css-loader'
+            }, {
+              loader: 'sass-loader',
+              options: {
+                includePaths: scssIncludePaths
+              }
+            }
+          ]
         },
         // old way
-/*
-        {
-          test: /\.css$/,
-          exclude: helpers.root('src', 'app'),
-          loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')
-        },
-        {
-          test: /\.css$/,
-          include: helpers.root('src', 'app'),
-          loader: 'raw!postcss'
-        },
-        {
-          test: /\.scss$/,
-          exclude: helpers.root('src', 'app'),
-          loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!resolve-url!sass?sourceMap')
-        },
-        {
-          test: /\.scss$/,
-          include: helpers.root('src', 'app'),
-          loaders: ['exports-loader?module.exports.toString()', 'css', 'postcss', 'sass']
-        },
-*/
+        /*
+                {
+                  test: /\.css$/,
+                  exclude: helpers.root('src', 'app'),
+                  loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')
+                },
+                {
+                  test: /\.css$/,
+                  include: helpers.root('src', 'app'),
+                  loader: 'raw!postcss'
+                },
+                {
+                  test: /\.scss$/,
+                  exclude: helpers.root('src', 'app'),
+                  loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!resolve-url!sass?sourceMap')
+                },
+                {
+                  test: /\.scss$/,
+                  include: helpers.root('src', 'app'),
+                  loaders: ['exports-loader?module.exports.toString()', 'css', 'postcss', 'sass']
+                },
+        */
 
 
 
