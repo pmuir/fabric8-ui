@@ -33,7 +33,8 @@ const METADATA = {
 };
 
 const scssIncludePaths = [
-  "/c/Users/pmuir/go/src/github.com/fabric8io/fabric8-ui/node_modules/bootstrap-sass/assets/stylesheets/"
+  '~bootstrap-sass/assets/stylesheets/',
+  '~fontawesome/scss'
 ];
 
 /*
@@ -159,8 +160,8 @@ module.exports = function (options) {
             },
             {
               loader: "css-loader",
-              options: {
-                sourceMap: true
+              query: {
+                // TODO need to publish source maps for ngx-widgets sourceMap: true
               }
             },
           ],
@@ -169,18 +170,18 @@ module.exports = function (options) {
         {
           test: /\.scss$/,
           loaders: [
-            {
+          {
               loader: 'css-to-string'
             }, {
               loader: 'css-loader',
-              options: {
-                sourceMap: true
+              query: {
+                //sourceMap: true
               }
             }, {
               loader: 'sass-loader',
-              options: {
+              query: {
                 includePaths: scssIncludePaths,
-                sourceMap: true
+                //sourceMap: true
               }
             }
           ]
