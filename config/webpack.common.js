@@ -43,7 +43,8 @@ const sassModules = [
     path: 'font-awesome',
     sass: 'scss'
   }, {
-    name: 'patternfly'
+    name: 'patternfly',
+    module: 'patternfly-sass-with-css'
   }
 ];
 
@@ -77,6 +78,13 @@ module.exports = function (options) {
   const isProd = options.env === 'production';
   const aotMode = false;//options && options.aot !== undefined;
   console.log('The options from the webpack config: ' + JSON.stringify(options, null, 2));
+
+  // ExtractTextPlugin
+  const extractCSS = new ExtractTextPlugin({
+    filename: '[name].[id]' + ( isProd ? '.[contenthash]' : '' ) + '.css',
+    allChunks: true }
+  );
+
   // const entryFile = aotMode ? './src/main.browser.aot.ts' : './src/main.browser.ts';
   // const outPath = aotMode ? 'dist' : 'aot';
   // const devtool = aotMode ? 'source-map' : 'eval-source-map';
@@ -187,16 +195,11 @@ module.exports = function (options) {
          */
         {
           test: /\.css$/,
-          loaders: [
-            {
-              loader: "css-to-string-loader"
-            },
-            {
-              loader: "css-loader"
-            }
-          ]
+          loader: extractCSS.extract({
+            fallback: "style-loader",
+            use: "css-loader?sourceMap&context=/"
+          })
         },
-
         {
           test: /\.scss$/,
           loaders: [
@@ -205,16 +208,19 @@ module.exports = function (options) {
             },
             {
               loader: 'css-loader',
-              query: {
-                minimize: isProd
+              options: {
+                minimize: isProd,
+                sourceMap: true,
+                context: '/'
               }
             },
             {
               loader: 'sass-loader',
-              query: {
+              options: {
                 includePaths: sassModules.map(val => {
                   return val.sassPath;
-                })
+                }),
+                sourceMap: true
               }
             }
           ]
@@ -230,7 +236,7 @@ module.exports = function (options) {
               loader: 'url-loader',
               query: {
                 limit: 3000,
-                name: path.resolve(__dirname, 'assets/fonts/[name].') + (isProd ? '[hash]' : '') + '[ext]'
+                name: 'assets/fonts/[name].' + (isProd ? '[hash]' : '') + '[ext]'
               }
             }
           ]
@@ -242,7 +248,7 @@ module.exports = function (options) {
               loader: 'url-loader',
               query: {
                 limit: 3000,
-                name: path.resolve(__dirname, 'assets/images/[name].') + (isProd ? '[hash]' : '') + '[ext]'
+                name: 'assets/images/[name].' + (isProd ? '[hash]' : '') + '[ext]'
               }
             }
           ]
@@ -360,8 +366,8 @@ module.exports = function (options) {
        *
        * See: https://gist.github.com/sokra/27b24881210b56bbaff7
        */
-      new LoaderOptionsPlugin({})
-
+      new LoaderOptionsPlugin({}),
+      extractCSS,
     ],
 
     /*
