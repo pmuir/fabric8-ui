@@ -10,11 +10,8 @@ var path = require('path');
 /*
  * Webpack Plugins
  */
-// problem with copy-webpack-plugin
-const AssetsPlugin = require('assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -25,14 +22,9 @@ const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ngcWebpack = require('ngc-webpack');
 const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
-const OptimizeJsPlugin = require('optimize-js-plugin');
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-const sassLintPlugin = require('sasslint-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-
-const precss = require('precss');
-
 
 const sassModules = [
   {
@@ -204,7 +196,7 @@ module.exports = function (options) {
           test: /\.scss$/,
           loaders: [
             {
-              loader: 'css-to-string-loader'
+              loader: 'to-string-loader'
             },
             {
               loader: 'css-loader',
@@ -252,17 +244,6 @@ module.exports = function (options) {
               }
             }
           ]
-        },
-        {
-          test: /manifest.json$/,
-          loaders: [
-            {
-              loader: 'file-loader'
-            },
-            {
-              loader: 'web-app-manifest-loader'
-            }
-          ]
         }
       ]
     },
@@ -273,21 +254,6 @@ module.exports = function (options) {
      * See: http://webpack.github.io/docs/configuration.html#plugins
      */
     plugins: [
-      /*
-       * Plugin: AssetsPlugin
-       * Description: Webpack plugin that emits a json file with assets paths.
-       * When working with Webpack you might want to generate your bundles with a generated hash in them (for cache busting).
-       * This plug-in outputs a json file with the paths of the generated assets so you can find them from somewhere else.
-       *
-       * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-       * See: https://github.com/kossnocorp/assets-webpack-plugin
-       */
-      new AssetsPlugin({
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'webpack-assets.json',
-        prettyPrint: true
-      }),
-
       /*
        * Plugin: ForkCheckerPlugin
        * Description: Do type checking in a separate process, so webpack don't need to wait.
