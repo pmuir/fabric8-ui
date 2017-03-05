@@ -19,7 +19,14 @@ function isWebpackDevServer() {
 
 var root = path.join.bind(path, ROOT);
 
+function nodeModulePath(nodeModule) {
+  return path.resolve(ROOT, "node_modules", nodeModule);
+}
+
 exports.hasProcessFlag = hasProcessFlag;
 exports.hasNpmFlag = hasNpmFlag;
 exports.isWebpackDevServer = isWebpackDevServer;
 exports.root = root;
+exports.nodeModulePath = nodeModulePath;
+
+
