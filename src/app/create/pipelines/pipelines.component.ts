@@ -27,12 +27,13 @@ import { BuildStore } from 'fabric8-runtime-console/src/app/kubernetes/store/bui
 })
 export class PipelinesComponent implements OnInit {
 
-  toolbarConfig: ToolbarConfig;
-
-  private _apps: FilterQuery[] = [];
-  private _codebases: FilterQuery[] = [];
   private _filteredPipelines: BuildConfig[] = [];
   private _allPipelines: BuildConfig = [];
+
+  toolbarConfig: ToolbarConfig;
+  private _apps: FilterQuery[] = [];
+  private _codebases: FilterQuery[] = [];
+
   private _appliedFilters: Filter[] = [];
   private _ascending: boolean;
   private _currentSortField: SortField = {
