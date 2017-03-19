@@ -197,7 +197,7 @@ export class EnvironmentsComponent implements OnInit {
         return this.deploymentsService.deployments;
       })
       // TODO HACK Deal with the over excited stream
-      .debounceTime(300)
+      .debounceTime(500)
       .do(val => console.log('debounced', val));
     return res;
   }
