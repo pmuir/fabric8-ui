@@ -25,11 +25,11 @@ import {
 export class PipelinesComponent implements OnInit {
 
   toolbarConfig: ToolbarConfig;
-
   private _apps: FilterQuery[] = [];
   private _codebases: FilterQuery[] = [];
   private _filteredPipelines: BuildConfig[] = [];
   private _allPipelines: BuildConfig[] = [];
+
   private _appliedFilters: Filter[] = [];
   private _ascending: boolean;
   private _currentSortField: SortField = {

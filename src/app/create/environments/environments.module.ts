@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
 
-import { ToolbarModule, ToolbarConfig } from 'ngx-widgets';
+import { ToolbarModule, ToolbarConfig, TreeListModule } from 'ngx-widgets';
 import {
   ComponentLoaderFactory,
   DropdownConfig,
@@ -10,6 +10,8 @@ import {
   PositioningService,
   TooltipConfig
 } from 'ng2-bootstrap';
+
+import { TreeModule } from 'angular2-tree-component';
 
 import { EnvironmentsComponent } from './environments.component';
 import { EnvironmentsRoutingModule } from './environments-routing.module';
@@ -37,7 +39,9 @@ import { BuildStore } from 'fabric8-runtime-console/src/app/kubernetes/store/bui
     HttpModule,
     PipelineModule,
     ToolbarModule,
-    DropdownModule],
+    DropdownModule,
+    TreeListModule,
+    TreeModule],
   declarations: [EnvironmentsComponent],
   providers: [
     ComponentLoaderFactory,
