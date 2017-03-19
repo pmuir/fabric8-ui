@@ -43,8 +43,6 @@ export class PipelinesComponent implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
 
-    // TODO HACK - Dummy Data loading
-
     // TODO HACK - Fabric8 Runtime Console modularity
     private pipelinesStore: BuildConfigStore,
     private buildStore: BuildStore
