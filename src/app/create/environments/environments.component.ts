@@ -1,4 +1,6 @@
-import { Observable } from 'rxjs';
+import { UserMgmtService } from './wrappers/usermgmt.service';
+import { DeploymentsService } from './wrappers/deployments.service';
+import { Observable, ConnectableObservable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, UserService } from 'ngx-login-client';
@@ -72,11 +74,29 @@ class EnvironmentType {
 })
 export class EnvironmentsComponent implements OnInit {
 
+  deployments: ConnectableObservable<any[]>;
   environments: Observable<Environment[]>;
 
   nodes: any[] = [
     {
-      name: 'asyncroot',
+      name: 'ConfigMap',
+      hasChildren: true
+    },
+    {
+      name: 'Deployments',
+      hasChildren: true
+    },
+    {
+      name: 'Events',
+      hasChildren: true
+    }, {
+      name: 'Pods',
+      hasChildren: true
+    }, {
+      name: 'Replica Sets',
+      hasChildren: true
+    }, {
+      name: 'Services',
       hasChildren: true
     }
   ];
@@ -84,11 +104,8 @@ export class EnvironmentsComponent implements OnInit {
   options = {
     actionMapping: {
       mouse: {
-        dblClick: (tree, node, $event) => {
-          if (node.hasChildren) TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);
-        },
         click: (tree, node, $event) => {
-          TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
+          TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);
         }
       }
     },
@@ -96,16 +113,6 @@ export class EnvironmentsComponent implements OnInit {
     isExpandedField: 'expanded',
     getChildren: this.getChildren.bind(this)
   };
-
-  asyncChildren = [{
-    name: 'child2.1',
-    subTitle: 'new and improved'
-  }, {
-    name: 'child2.2',
-    subTitle: 'new and improved2'
-  }];
-
-  selectedTreeListItem: TreeListItemComponent;
 
   toolbarConfig: ToolbarConfig;
   private _apps: FilterQuery[] = [];
@@ -120,7 +127,10 @@ export class EnvironmentsComponent implements OnInit {
 
 
   constructor(
-    contexts: Contexts
+    contexts: Contexts,
+    private deploymentsService: DeploymentsService,
+    private switchableNamespace: SwitchableNamespaceScope,
+    private userMgmtService: UserMgmtService
   ) {
     // TODO DUMMY Set up a couple of dummy environments for the current space
     // NOTE This requires you to manually set up the right projects in OpenShift
@@ -174,8 +184,20 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.environments.subscribe(val => console.log(val));
+    this.environments.do(environments => {
+      // TODO Add each subscriptions for each service for each environment
+    }).subscribe(val => console.log(val));
+    this.deployments = this.userMgmtService
+      .setup()
+      .switchMap(() => {
+        this.switchableNamespace.changeNamespace('rhn-support-pmuir-dev');
+        return this.deploymentsService.deployments;
+      }).publishReplay(1);
+    this.deployments.subscribe(deployments => console.log('deployments:', deployments));
+    this.deployments.connect();
   }
+
+  // CODE RELATED TO
 
   // CODE RELATED TO WIDGETS
 
@@ -195,26 +217,21 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   getChildren(node: TreeNode) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(this.asyncChildren.map((c) => {
-        return Object.assign({}, c, {
-          hasChildren: node.level < 5
-        });
-      })), 1000);
-    });
+    if (node.data.name === 'Deployments') {
+      return this.deployments
+        .map(deployments => deployments.map(deployment => ({
+          name: deployment.name,
+          hasChildren: false
+        })))
+        .do(val => console.log('children:', val)).first()
+        .toPromise();
+    } else {
+      return Observable.of({}).toPromise();
+    }
   }
 
   childrenCount(node: TreeNode): string {
     return node && node.children ? `(${node.children.length})` : '';
-  }
-
-  select(treeListItem: TreeListItemComponent): void {
-    // de-select prior selected element (if any)
-    if (this.selectedTreeListItem && this.selectedTreeListItem !== treeListItem) {
-      this.selectedTreeListItem.setSelected(false);
-    }
-    treeListItem.setSelected(true);
-    this.selectedTreeListItem = treeListItem;
   }
 
   /*compare(a: any, b: any) {

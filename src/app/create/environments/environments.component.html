@@ -17,7 +17,6 @@
           <template #treeListTemplate let-node="node" let-index="index">
             <alm-tree-list-item
                 [node]="node"
-                (onSelect)="select($event)"
                 [template]="treeListItemTemplate">
               <template #treeListItemTemplate>
                 <span title="{{node.data.subTitle}}">{{ node.data.name }}</span>

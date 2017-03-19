@@ -37,24 +37,22 @@ export class PipelinesComponent implements OnInit {
   private _appliedFilters: Filter[] = [];
   private _ascending: boolean;
   private _currentSortField: SortField = {
-            id: 'application',
-            title: 'Application',
-            sortType: 'alpha'
-          } as SortField;
+    id: 'application',
+    title: 'Application',
+    sortType: 'alpha'
+  } as SortField;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    private onLogin: OnLogin,
-    private oauthConfigStore: OAuthConfigStore,
     private userService: UserService,
-
-    // TODO HACK - Dummy Data loading
 
     // TODO HACK - Fabric8 Runtime Console modularity
     private pipelinesStore: BuildConfigStore,
     private buildStore: BuildStore,
-    private apiStore: APIsStore
+    private apiStore: APIsStore,
+    private onLogin: OnLogin,
+    private oauthConfigStore: OAuthConfigStore,
   ) {
 
     this.toolbarConfig = {
