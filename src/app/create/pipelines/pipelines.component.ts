@@ -20,21 +20,6 @@ import { APIsStore } from 'fabric8-runtime-console/src/app/kubernetes/store/apis
 import { BuildConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/buildconfig.store';
 import { BuildStore } from 'fabric8-runtime-console/src/app/kubernetes/store/build.store';
 
-class Environment {
-  name: string;
-  type: EnvironmentType;
-  namespaceRef: string;
-}
-
-class EnvironmentType {
-
-  public static readonly DEV = { name: 'dev' } as EnvironmentType;
-  public static readonly INT = { name: 'int' } as EnvironmentType;
-  public static readonly PROD = { name: 'prod' } as EnvironmentType;
-
-  name: string;
-}
-
 @Component({
   selector: 'alm-pipelines',
   templateUrl: 'pipelines.component.html',
@@ -48,7 +33,6 @@ export class PipelinesComponent implements OnInit {
   private _codebases: FilterQuery[] = [];
   private _filteredPipelines: BuildConfig[] = [];
   private _allPipelines: BuildConfig = [];
-  private _environments: Map<Space, Environment[]>;
   private _appliedFilters: Filter[] = [];
   private _ascending: boolean;
   private _currentSortField: SortField = {
