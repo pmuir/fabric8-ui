@@ -40,7 +40,8 @@ import { DeploymentService } from 'fabric8-runtime-console/src/app/kubernetes/se
 import { NamespaceScope } from 'fabric8-runtime-console/src/app/kubernetes/service/namespace.scope';
 import { DeploymentConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/deploymentconfig.store';
 import { DeploymentConfigService } from 'fabric8-runtime-console/src/app/kubernetes/service/deploymentconfig.service';
-import { ServiceService } from 'fabric8-runtime-console/src/app/kubernetes/service/service.service';
+import { ServiceService } from   'fabric8-runtime-console/src/app/kubernetes/service/service.service';
+import { DeploymentModule } from 'fabric8-runtime-console/src/app/kubernetes/ui/deployment/deployment.module';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { ServiceService } from 'fabric8-runtime-console/src/app/kubernetes/servi
     ToolbarModule,
     DropdownModule,
     TreeListModule,
-    TreeModule],
+    TreeModule,
+    DeploymentModule],
   declarations: [EnvironmentsComponent],
   providers: [
     ComponentLoaderFactory,

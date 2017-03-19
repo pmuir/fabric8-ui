@@ -74,7 +74,6 @@ class EnvironmentType {
 })
 export class EnvironmentsComponent implements OnInit {
 
-  deployments: ConnectableObservable<any[]>;
   environments: Observable<Environment[]>;
 
   nodes: any[] = [
@@ -184,20 +183,24 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.environments.do(environments => {
-      // TODO Add each subscriptions for each service for each environment
-    }).subscribe(val => console.log(val));
-    this.deployments = this.userMgmtService
-      .setup()
-      .switchMap(() => {
-        this.switchableNamespace.changeNamespace('rhn-support-pmuir-dev');
-        return this.deploymentsService.deployments;
-      }).publishReplay(1);
-    this.deployments.subscribe(deployments => console.log('deployments:', deployments));
-    this.deployments.connect();
   }
 
-  // CODE RELATED TO
+  // CODE RELATED TO KUBERNETES
+
+  private get deployments(): Observable<any> {
+    let res = this.userMgmtService
+      .setup()
+      .switchMap(() => this.environments)
+      .map(environments => environments[0])
+      .switchMap(environment => {
+        this.switchableNamespace.changeNamespace(environment.namespaceRef);
+        return this.deploymentsService.deployments;
+      })
+      // TODO HACK Deal with the over excited stream
+      .debounceTime(300)
+      .do(val => console.log('debounced', val));
+    return res;
+  }
 
   // CODE RELATED TO WIDGETS
 
@@ -221,6 +224,7 @@ export class EnvironmentsComponent implements OnInit {
       return this.deployments
         .map(deployments => deployments.map(deployment => ({
           name: deployment.name,
+          deployment: deployment,
           hasChildren: false
         })))
         .do(val => console.log('children:', val)).first()
