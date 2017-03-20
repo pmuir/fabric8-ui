@@ -9,14 +9,11 @@ import { AuthenticationService, UserService } from 'ngx-login-client';
 import { ToolbarConfig, FilterConfig, FilterQuery, FilterEvent, Filter, SortEvent, SortField } from 'ngx-widgets';
 
 // TODO HACK
-import { OnLogin } from 'fabric8-runtime-console/src/app/shared/onlogin.service';
-import { OAuthConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/oauth-config-store';
 import {
   BuildConfig, BuildConfigs,
   combineBuildConfigAndBuilds,
   filterPipelines
 } from 'fabric8-runtime-console/src/app/kubernetes/model/buildconfig.model';
-import { APIsStore } from 'fabric8-runtime-console/src/app/kubernetes/store/apis.store';
 import { BuildConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/buildconfig.store';
 import { BuildStore } from 'fabric8-runtime-console/src/app/kubernetes/store/build.store';
 
@@ -49,10 +46,7 @@ export class PipelinesComponent implements OnInit {
 
     // TODO HACK - Fabric8 Runtime Console modularity
     private pipelinesStore: BuildConfigStore,
-    private buildStore: BuildStore,
-    private apiStore: APIsStore,
-    private onLogin: OnLogin,
-    private oauthConfigStore: OAuthConfigStore,
+    private buildStore: BuildStore
   ) {
 
     this.toolbarConfig = {
@@ -152,16 +146,7 @@ export class PipelinesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.apiStore.load();
-    this.apiStore.loading.distinctUntilChanged().filter(flag => (!flag))
-      .switchMap(() => this.authService.getOpenShiftToken())
-      .switchMap(token =>
-        this.oauthConfigStore.resource.do(config => {
-          if (config.loaded) {
-            this.onLogin.onLogin(token);
-          }
-        })
-      ).switchMap(val => this.userService.loggedInUser)
+    this.userService.loggedInUser
       .map(user => `${user.attributes.username}-osio`)
       .switchMap(namespace => this.pipelinesStore.loadAll())
       .combineLatest(this.buildStore.loadAll(), combineBuildConfigAndBuilds)

@@ -1,3 +1,4 @@
+import { RuntimeConsoleResolver } from './runtime-console.resolver';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -8,6 +9,9 @@ const routes: Routes = [
   {
     path: '',
     component: CreateComponent,
+    resolve: {
+      runtime: RuntimeConsoleResolver
+    },
     children: [
       { path: '', component: CodebasesComponent },
       { path: 'pipelines', loadChildren: './pipelines/pipelines.module#PipelinesModule' },

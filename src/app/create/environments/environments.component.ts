@@ -1,4 +1,3 @@
-import { UserMgmtService } from './wrappers/usermgmt.service';
 import { DeploymentsService } from './wrappers/deployments.service';
 import { Observable, ConnectableObservable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
@@ -128,8 +127,7 @@ export class EnvironmentsComponent implements OnInit {
   constructor(
     contexts: Contexts,
     private deploymentsService: DeploymentsService,
-    private switchableNamespace: SwitchableNamespaceScope,
-    private userMgmtService: UserMgmtService
+    private switchableNamespace: SwitchableNamespaceScope
   ) {
     // TODO DUMMY Set up a couple of dummy environments for the current space
     // NOTE This requires you to manually set up the right projects in OpenShift
@@ -188,9 +186,7 @@ export class EnvironmentsComponent implements OnInit {
   // CODE RELATED TO KUBERNETES
 
   private get deployments(): Observable<any> {
-    let res = this.userMgmtService
-      .setup()
-      .switchMap(() => this.environments)
+    let res = this.environments
       .map(environments => environments[0])
       .switchMap(environment => {
         this.switchableNamespace.changeNamespace(environment.namespaceRef);

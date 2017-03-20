@@ -33,8 +33,6 @@ import { ToolsNamespaceScope } from './tools-namespace.scope';
 @NgModule({
   imports: [CommonModule,
     PipelinesRoutingModule,
-    RestangularModule,
-    KubernetesRestangularModule,
     HttpModule,
     PipelineModule,
     ToolbarModule,
@@ -48,10 +46,7 @@ import { ToolsNamespaceScope } from './tools-namespace.scope';
 
     // TODO HACK These are providers that need reorging in fabric8-runtime
     LoginService,
-    OnLogin,
-    OAuthConfigStore,
     BuildConfigService,
-    APIsStore,
     BuildConfigStore,
     BuildStore,
     BuildService,

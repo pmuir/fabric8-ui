@@ -1,4 +1,3 @@
-import { UserMgmtService } from './wrappers/usermgmt.service';
 import { DeploymentsService } from './wrappers/deployments.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -47,8 +46,6 @@ import { DeploymentModule } from 'fabric8-runtime-console/src/app/kubernetes/ui/
 @NgModule({
   imports: [CommonModule,
     EnvironmentsRoutingModule,
-    RestangularModule,
-    KubernetesRestangularModule,
     HttpModule,
     PipelineModule,
     ToolbarModule,
@@ -65,7 +62,6 @@ import { DeploymentModule } from 'fabric8-runtime-console/src/app/kubernetes/ui/
 
     // TODO HACK These are my wrapper providers to try to contain the hacks ;-)
     DeploymentsService,
-    UserMgmtService,
 
     // TODO HACK These are providers that need reorging in fabric8-runtime
     LoginService,
