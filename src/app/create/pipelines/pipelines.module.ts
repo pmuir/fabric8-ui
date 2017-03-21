@@ -18,9 +18,6 @@ import { PipelineModule } from 'fabric8-runtime-console';
 // TODO HACK These should all be exported by the modules
 import { RestangularModule } from 'ng2-restangular';
 import { KubernetesRestangularModule } from 'fabric8-runtime-console/src/app/kubernetes/service/kubernetes.restangular';
-import { LoginService } from 'fabric8-runtime-console/src/app/shared/login.service';
-import { OnLogin } from 'fabric8-runtime-console/src/app/shared/onlogin.service';
-import { OAuthConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/oauth-config-store';
 import { BuildConfigService } from 'fabric8-runtime-console/src/app/kubernetes/service/buildconfig.service';
 import { DevNamespaceScope } from 'fabric8-runtime-console/src/app/kubernetes/service/devnamespace.scope';
 import { BuildService } from 'fabric8-runtime-console/src/app/kubernetes/service/build.service';
@@ -45,7 +42,6 @@ import { ToolsNamespaceScope } from './tools-namespace.scope';
     TooltipConfig,
 
     // TODO HACK These are providers that need reorging in fabric8-runtime
-    LoginService,
     BuildConfigService,
     BuildConfigStore,
     BuildStore,

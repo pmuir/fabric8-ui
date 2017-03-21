@@ -17,6 +17,7 @@ import { OnLogin } from 'fabric8-runtime-console/src/app/shared/onlogin.service'
 import { OAuthConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/oauth-config-store';
 import { APIsStore } from 'fabric8-runtime-console/src/app/kubernetes/store/apis.store';
 
+// TODO Replace this with just pure injection
 @Injectable()
 export class RuntimeConsoleResolver implements Resolve<Context> {
 

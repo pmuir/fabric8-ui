@@ -1,7 +1,8 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
+
+import { PipelineModule } from 'fabric8-runtime-console';
 
 import { CreateComponent } from './create.component';
 import { CreateRoutingModule } from './create-routing.module';
@@ -15,8 +16,9 @@ import { OnLogin } from 'fabric8-runtime-console/src/app/shared/onlogin.service'
 import { OAuthConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/oauth-config-store';
 import { APIsStore } from 'fabric8-runtime-console/src/app/kubernetes/store/apis.store';
 import { LoginService } from 'fabric8-runtime-console/src/app/shared/login.service';
+
+// TODO Remove this, we should just use injection to ensure this is set up properly
 import { RuntimeConsoleResolver } from './runtime-console.resolver';
-import { PipelineModule } from 'fabric8-runtime-console';
 
 
 
@@ -29,7 +31,7 @@ import { PipelineModule } from 'fabric8-runtime-console';
     HttpModule,
     RestangularModule,
     KubernetesRestangularModule,
-    PipelineModule,
+    PipelineModule
   ],
   declarations: [CreateComponent],
   providers: [

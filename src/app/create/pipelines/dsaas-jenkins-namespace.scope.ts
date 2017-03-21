@@ -1,4 +1,3 @@
-import { ConfigStore } from './../../base/config.store';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,20 +6,14 @@ import { UserService } from 'ngx-login-client';
 import { NamespaceScope } from 'fabric8-runtime-console/src/app/kubernetes/service/namespace.scope';
 
 @Injectable()
-export class ToolsNamespaceScope extends NamespaceScope {
+export class DSaaSJenkinsNamespaceScope extends NamespaceScope {
 
   private _namespace: Observable<string>;
 
-  constructor(
-    activatedRoute: ActivatedRoute,
-    router: Router,
-    userService: UserService,
-    configStore: ConfigStore
-  ) {
+  constructor(activatedRoute: ActivatedRoute, router: Router, userService: UserService) {
     super(activatedRoute, router);
-    this._namespace = Observable.forkJoin(
-      userService.loggedInUser,
-      configStore.get('fa')
+    this._namespace = userService
+      .loggedInUser
       .map(user => `${user.attributes.username}-dsaas-jenkins`);
   }
 

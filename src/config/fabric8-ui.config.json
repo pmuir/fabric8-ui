@@ -1,0 +1,3 @@
+{
+  "pipelines_namespace": "{{ .Env.PIPELINES_NAMESPACE }}"
+}
