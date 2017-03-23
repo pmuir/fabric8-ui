@@ -18,7 +18,7 @@ import {
 import { PipelinesComponent } from './pipelines.component';
 import { PipelinesRoutingModule } from './pipelines-routing.module';
 import { runtimeConsoleImports } from './../runtime-console/runtime-console';
-import { toolsNamespaceScopeProvider } from './../runtime-console/tools-namespace.scope';
+import { spaceDevNamespaceScopeProvider } from './../runtime-console/space-namespace.scope';
 import { runtimeConsoleLoginProviders } from './../runtime-console/runtime-console.resolver';
 
 
@@ -40,7 +40,7 @@ import { runtimeConsoleLoginProviders } from './../runtime-console/runtime-conso
     PositioningService,
     TooltipConfig,
     runtimeConsoleLoginProviders,
-    toolsNamespaceScopeProvider
+    spaceDevNamespaceScopeProvider
   ]
 })
 export class PipelinesModule {

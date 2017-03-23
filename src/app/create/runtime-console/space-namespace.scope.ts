@@ -10,14 +10,11 @@ import { StaticNamespaceScope } from './static-namespace.scope';
 import { ObservableFabric8UIConfig } from './../../shared/config/fabric8-ui-config.service';
 import { Fabric8UIConfig } from './../../shared/config/fabric8-ui-config';
 
-// TODO HACK These should all be exported by the modules
-
-
 /**
- * A NamespaceScope which always returns a particular namespace
+ * A NamespaceScope which returns the namespace for the space
  */
 @Injectable()
-export class ToolsNamespaceScope extends StaticNamespaceScope {
+export class SpaceNamespaceScope extends StaticNamespaceScope {
 
   constructor(
     activatedRoute: ActivatedRoute,
@@ -47,7 +44,7 @@ export class ToolsNamespaceScope extends StaticNamespaceScope {
   }
 }
 
-export let toolsNamespaceScopeProvider = {
+export let spaceDevNamespaceScopeProvider = {
   provide: DevNamespaceScope,
-  useClass: ToolsNamespaceScope
+  useClass: SpaceNamespaceScope
 };
