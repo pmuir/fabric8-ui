@@ -42,8 +42,6 @@ export class PipelinesComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private userService: UserService,
-
-    // TODO HACK - Fabric8 Runtime Console modularity
     private pipelinesStore: BuildConfigStore,
     private buildStore: BuildStore
   ) {
@@ -145,8 +143,14 @@ export class PipelinesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.pipelinesStore.loadAll()
-      .combineLatest(this.buildStore.loadAll(), combineBuildConfigAndBuilds)
+    Observable.combineLatest(
+      this.pipelinesStore
+        .loadAll()
+        .distinctUntilChanged(),
+      this.buildStore
+        .loadAll()
+        .distinctUntilChanged(),
+      combineBuildConfigAndBuilds)
       .map(filterPipelines)
       .do(val => {
         (val as BuildConfig[])
