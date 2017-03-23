@@ -1,11 +1,14 @@
-import { UserMgmtService } from './wrappers/usermgmt.service';
-import { DeploymentsService } from './wrappers/deployments.service';
-import { Observable, ConnectableObservable } from 'rxjs';
+import { SwitchableNamespaceScope } from './../runtime-console/switchable-namepsace.scope';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, UserService } from 'ngx-login-client';
 
+import { Observable, ConnectableObservable } from 'rxjs';
+
+import { AuthenticationService, UserService } from 'ngx-login-client';
 import { Space, SpaceService, Spaces, Contexts } from 'ngx-fabric8-wit';
+import { createDeploymentViews, CompositeDeploymentStore, ServiceStore } from 'fabric8-runtime-console';
+
+import { DeploymentsService } from './../runtime-console/deployments.service';
 
 import {
   ToolbarConfig,
@@ -26,21 +29,6 @@ import {
   IActionMapping
 } from 'angular2-tree-component';
 
-import { SwitchableNamespaceScope } from './switchable-namepsace.scope';
-
-
-// TODO HACK
-import { OnLogin } from 'fabric8-runtime-console/src/app/shared/onlogin.service';
-import { OAuthConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/oauth-config-store';
-import {
-  BuildConfig, BuildConfigs,
-  combineBuildConfigAndBuilds,
-  filterEnvironments
-} from 'fabric8-runtime-console/src/app/kubernetes/model/buildconfig.model';
-import { APIsStore } from 'fabric8-runtime-console/src/app/kubernetes/store/apis.store';
-import { BuildConfigStore } from 'fabric8-runtime-console/src/app/kubernetes/store/buildconfig.store';
-import { BuildStore } from 'fabric8-runtime-console/src/app/kubernetes/store/build.store';
-import { BuildConfigService } from 'fabric8-runtime-console/src/app/kubernetes/service/buildconfig.service';
 
 
 class Environment {
@@ -127,9 +115,9 @@ export class EnvironmentsComponent implements OnInit {
 
   constructor(
     contexts: Contexts,
-    private deploymentsService: DeploymentsService,
     private switchableNamespace: SwitchableNamespaceScope,
-    private userMgmtService: UserMgmtService
+    private deploymentsStore: CompositeDeploymentStore,
+    private serviceStore: ServiceStore
   ) {
     // TODO DUMMY Set up a couple of dummy environments for the current space
     // NOTE This requires you to manually set up the right projects in OpenShift
@@ -188,13 +176,14 @@ export class EnvironmentsComponent implements OnInit {
   // CODE RELATED TO KUBERNETES
 
   private get deployments(): Observable<any> {
-    let res = this.userMgmtService
-      .setup()
-      .switchMap(() => this.environments)
+    let res = this.environments
       .map(environments => environments[0])
       .switchMap(environment => {
         this.switchableNamespace.changeNamespace(environment.namespaceRef);
-        return this.deploymentsService.deployments;
+        return Observable.combineLatest(
+          this.deploymentsStore.loadAll().distinctUntilChanged(),
+          this.serviceStore.loadAll().distinctUntilChanged(),
+          createDeploymentViews);
       })
       // TODO HACK Deal with the over excited stream
       .debounceTime(300)
