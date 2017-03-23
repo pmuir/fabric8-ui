@@ -1,4 +1,3 @@
-import { SwitchableNamespaceScope } from './../runtime-console/switchable-namepsace.scope';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,7 +7,8 @@ import { AuthenticationService, UserService } from 'ngx-login-client';
 import { Space, SpaceService, Spaces, Contexts } from 'ngx-fabric8-wit';
 import { createDeploymentViews, CompositeDeploymentStore, ServiceStore } from 'fabric8-runtime-console';
 
-import { DeploymentsService } from './../runtime-console/deployments.service';
+import { SwitchableNamespaceScope } from './../../shared/runtime-console/switchable-namepsace.scope';
+
 
 import {
   ToolbarConfig,

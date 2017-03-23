@@ -55,11 +55,15 @@ import { recommenderApiUrlProvider } from './shared/recommender-api.provider';
 import { authApiUrlProvider } from './shared/auth-api.provider';
 import { witApiUrlProvider } from './shared/wit-api.provider';
 import { ssoApiUrlProvider } from './shared/sso-api.provider';
+import { runtimeConsoleImports } from './shared/runtime-console/runtime-console';
+
 
 // Component Services
 import { ProfileService } from './profile/profile.service';
 import { SpaceService, Contexts, Spaces, Notifications } from 'ngx-fabric8-wit';
 import {AuthUserResolve} from './shared/common.resolver';
+
+import { OnLogin } from 'fabric8-runtime-console';
 
 // Login
 
@@ -94,7 +98,8 @@ export type StoreType = {
     ReactiveFormsModule,
     WidgetsModule,
     // AppRoutingModule must appear last
-    AppRoutingModule
+    AppRoutingModule,
+    runtimeConsoleImports
   ],
   declarations: [ // declare which components, directives and pipes belong to the module
     AppComponent,
@@ -145,7 +150,8 @@ export type StoreType = {
     },
     fabric8UIConfigProvider,
     ConfigStore,
-    AnalyticService
+    AnalyticService,
+    OnLogin
   ],
   schemas: [],
   bootstrap: [AppComponent]

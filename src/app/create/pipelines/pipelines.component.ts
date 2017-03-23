@@ -1,12 +1,14 @@
-import { BuildConfigService } from 'fabric8-runtime-console/src/app/kubernetes/service/buildconfig.service';
-import { SwitchableNamespaceScope } from './switchable-namepsace.scope';
-import { Space, SpaceService } from 'ngx-fabric8-wit';
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, UserService } from 'ngx-login-client';
 
+import { Observable } from 'rxjs';
+
+import { AuthenticationService, UserService } from 'ngx-login-client';
 import { ToolbarConfig, FilterConfig, FilterQuery, FilterEvent, Filter, SortEvent, SortField } from 'ngx-widgets';
+import { Space, SpaceService } from 'ngx-fabric8-wit';
+
+
+import { SwitchableNamespaceScope } from './switchable-namepsace.scope';
 
 import {
   BuildConfig,

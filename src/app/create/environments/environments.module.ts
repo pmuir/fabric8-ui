@@ -21,8 +21,8 @@ import {
 } from 'fabric8-runtime-console';
 import { RestangularModule } from 'ng2-restangular';
 
-import { SwitchableNamespaceScope } from './../runtime-console/switchable-namepsace.scope';
-import { runtimeConsoleImports } from './../runtime-console/runtime-console';
+import { SwitchableNamespaceScope } from './../../shared/runtime-console/switchable-namepsace.scope';
+import { runtimeConsoleImports } from './../../shared/runtime-console/runtime-console';
 import { EnvironmentsComponent } from './environments.component';
 import { EnvironmentsRoutingModule } from './environments-routing.module';
 
@@ -36,8 +36,7 @@ import { EnvironmentsRoutingModule } from './environments-routing.module';
     DropdownModule,
     TreeListModule,
     TreeModule,
-    DeploymentModule,
-    runtimeConsoleImports
+    DeploymentModule
   ],
   declarations: [EnvironmentsComponent],
   providers: [

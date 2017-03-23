@@ -17,9 +17,9 @@ import {
 
 import { PipelinesComponent } from './pipelines.component';
 import { PipelinesRoutingModule } from './pipelines-routing.module';
-import { runtimeConsoleImports } from './../runtime-console/runtime-console';
-import { spaceDevNamespaceScopeProvider } from './../runtime-console/space-namespace.scope';
-import { runtimeConsoleLoginProviders } from './../runtime-console/runtime-console.resolver';
+import { runtimeConsoleImports } from './../../shared/runtime-console/runtime-console';
+import { spaceDevNamespaceScopeProvider } from './../../shared/runtime-console/space-namespace.scope';
+import { runtimeConsoleLoginProviders } from './../../shared/runtime-console/runtime-console.resolver';
 
 
 
@@ -30,8 +30,7 @@ import { runtimeConsoleLoginProviders } from './../runtime-console/runtime-conso
     HttpModule,
     PipelineModule,
     ToolbarModule,
-    DropdownModule,
-    runtimeConsoleImports
+    DropdownModule
   ],
   declarations: [PipelinesComponent],
   providers: [

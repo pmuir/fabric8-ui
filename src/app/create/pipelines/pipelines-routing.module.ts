@@ -1,4 +1,4 @@
-import { RuntimeConsoleResolver } from './../runtime-console/runtime-console.resolver';
+import { RuntimeConsoleResolver } from './../../shared/runtime-console/runtime-console.resolver';
 import { AuthGuard } from './../../shared/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
