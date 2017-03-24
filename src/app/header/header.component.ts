@@ -97,6 +97,7 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
+    this.broadcaster.broadcast('login');
     this.loginService.redirectToAuth();
   }
 
