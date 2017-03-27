@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       { path: '', component: CodebasesComponent },
       { path: 'pipelines', loadChildren: './pipelines/pipelines.module#PipelinesModule' },
-      { path: 'environments', loadChildren: './environments/environments.module#EnvironmentsModule' },
+      { path: 'environments', loadChildren: './environments/create-environments.module#CreateEnvironmentsModule' },
     ]
   }
 ];
