@@ -102,6 +102,11 @@ export class HeaderComponent implements OnInit {
     this.loginService.redirectToAuth();
   }
 
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['']);
+  }
+
   onImgLoad() {
     this.imgLoaded = true;
   }
