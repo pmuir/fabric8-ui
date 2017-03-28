@@ -1,12 +1,19 @@
-import { NgModule }         from '@angular/core';
-import { CommonModule }     from '@angular/common';
+import { Fabric8UISpaceNamespace } from './../../shared/runtime-console/fabric8-ui-space-namespace.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
-import { EnvironmentModule } from 'fabric8-runtime-console';
+import { EnvironmentModule, SpaceNamespace } from 'fabric8-runtime-console';
 
 
 @NgModule({
-  imports:      [ CommonModule, HttpModule, EnvironmentModule ]
+  imports: [CommonModule, HttpModule, EnvironmentModule],
+  providers: [
+    {
+      provide: SpaceNamespace,
+      useClass: Fabric8UISpaceNamespace
+    }
+  ]
 })
 export class CreateEnvironmentsModule {
-  constructor(http: Http) {}
+  constructor(http: Http) { }
 }
