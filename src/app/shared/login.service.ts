@@ -76,11 +76,11 @@ export class LoginService {
     } else if (result['token_json']) {
       // Handle the case that this is a login
       this.authService.logIn(result['token_json']);
-      this.authService.getOpenShiftToken().subscribe(token => this.openShiftToken);
+      this.authService.getOpenShiftToken().subscribe(token => this.openShiftToken = token);
     } else if (this.authService.isLoggedIn()) {
       // Handle the case the user is already logged in
       this.authService.onLogIn();
-      this.authService.getOpenShiftToken().subscribe(token => this.openShiftToken);
+      this.authService.getOpenShiftToken().subscribe(token => this.openShiftToken = token);
     }
   }
 

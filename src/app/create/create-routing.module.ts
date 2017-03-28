@@ -1,3 +1,4 @@
+import { OAuthConfigStoreGuard } from './../shared/runtime-console/oauth-config-store-guard.service';
 import { RuntimeConsoleResolver } from './runtime-console.resolver';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
