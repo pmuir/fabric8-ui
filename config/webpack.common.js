@@ -76,9 +76,8 @@ module.exports = function (options) {
 
   // ExtractTextPlugin
   const extractCSS = new ExtractTextPlugin({
-
     filename: '_assets/stylesheets/[name].[id]' + ( isProd ? '.[contenthash]' : '' ) + '.css'
-  );
+  });
 
   // const entryFile = aotMode ? './src/main.browser.aot.ts' : './src/main.browser.ts';
   // const outPath = aotMode ? 'dist' : 'aot';
