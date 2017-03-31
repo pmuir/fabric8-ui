@@ -6,11 +6,18 @@ import { Observable } from 'rxjs';
 import { cloneDeep } from 'lodash';
 
 import { Broadcaster, Notifications, Notification, NotificationType } from 'ngx-base';
-import { WIT_API_URL  } from 'ngx-fabric8-wit';
+import { WIT_API_URL } from 'ngx-fabric8-wit';
 import { Profile, User, UserService } from 'ngx-login-client';
 
 import { DummyService } from './../shared/dummy.service';
 
+export class ExtUser extends User {
+  attributes: ExtProfile;
+}
+
+export class ExtProfile extends Profile {
+  store: any;
+}
 
 /*
  * A service that manages the users profile
@@ -21,7 +28,7 @@ export class ProfileService {
 
   private static readonly HEADERS: Headers = new Headers({ 'Content-Type': 'application/json' });
   private profileUrl: string;
-  private _loggedInUser: User;
+  private _loggedInUser: ExtUser;
 
   constructor(
     private dummy: DummyService,
@@ -33,16 +40,23 @@ export class ProfileService {
     private notifications: Notifications
   ) {
     this.profileUrl = apiUrl + 'users';
-    userService.loggedInUser.subscribe(val => this._loggedInUser = val);
+    userService.loggedInUser
+      .map(user => cloneDeep(user) as ExtUser)
+      .do(user => user.attributes.store = (user as any).contextInformation || {})
+      .subscribe(val => {
+        this._loggedInUser = val;
+      });
   }
 
-  get current(): Profile {
+  get current(): ExtProfile {
     return this._loggedInUser.attributes;
   }
 
   save() {
-    let profile = cloneDeep(this.current);
+    let profile = cloneDeep(this.current) as any;
     delete profile.username;
+    // Handle the odd naming of the field on the API
+    profile.contextInformation = profile.store;
     let payload = JSON.stringify({
       data: {
         attributes: profile,

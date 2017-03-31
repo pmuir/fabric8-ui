@@ -1,3 +1,4 @@
+import { ProfileService } from './../profile/profile.service';
 import { Broadcaster } from 'ngx-base';
 import { ConnectableObservable } from 'rxjs/observable/ConnectableObservable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -20,7 +21,8 @@ export class SpacesService implements Spaces {
     private contexts: Contexts,
     private localStorage: LocalStorageService,
     private spaceService: SpaceService,
-    private broadcaster: Broadcaster
+    private broadcaster: Broadcaster,
+    private profileService: ProfileService
   ) {
     this._current = contexts.current
       .map(val => val.space);
@@ -89,6 +91,8 @@ export class SpacesService implements Spaces {
 
   private saveRecent(recent: Space[]) {
     this.localStorage.set(SpacesService.RECENT_SPACE_KEY, recent.map(val => val.id));
+    this.profileService.current.store.recentSpaces = recent.map(val => val.id);
+    this.profileService.save();
   }
 
 }
