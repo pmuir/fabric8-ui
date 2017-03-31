@@ -63,7 +63,11 @@ export class SpacesService implements Spaces {
       })
       .multicast(() => new ReplaySubject(1));
     this._recent.connect();
-    Observable.forkJoin(this.loadRecent()).subscribe(val => val.forEach(space => addRecent.next(space)));
+    this.loadRecent().subscribe(val =>
+    {
+      console.log(val);
+      val.forEach(space => addRecent.next(space));
+    });
   }
 
   get current(): Observable<Space> {
@@ -74,25 +78,28 @@ export class SpacesService implements Spaces {
     return this._recent;
   }
 
-  private loadRecent(): Observable<Space>[] {
-    let res: Space[] = [];
-    if (this.localStorage.get(SpacesService.RECENT_SPACE_KEY)) {
-      return this.localStorage
-        .get<string[]>(SpacesService.RECENT_SPACE_KEY)
-        // We invert the order above when we add recent contexts
-        .reverse()
-        .map(id => {
-          return this.spaceService.getSpaceById(id);
-        });
-    } else {
-      return [];
-    }
+  private loadRecent(): Observable<Space[]> {
+    return this.profileService.current.switchMap(profile => {
+      if (profile.store.recentSpaces) {
+        return Observable.forkJoin((profile.store.recentSpaces as string[])
+          // We invert the order above when we add recent contexts
+          .reverse()
+          .map(id => {
+            return this.spaceService.getSpaceById(id);
+          }));
+      } else {
+        return Observable.of([]);
+      }
+    });
   }
 
   private saveRecent(recent: Space[]) {
-    this.localStorage.set(SpacesService.RECENT_SPACE_KEY, recent.map(val => val.id));
-    this.profileService.current.store.recentSpaces = recent.map(val => val.id);
-    this.profileService.save();
+    this.profileService.current
+      .switchMap(profile => {
+        profile.store.recentSpaces = recent.map(val => val.id);
+        return this.profileService.silentSave(profile);
+      })
+      .subscribe(profile => { }, err => console.log('Error saving recent spaces:', err));
   }
 
 }
