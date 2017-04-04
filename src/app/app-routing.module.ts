@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { trimEnd } from 'lodash';
 
-import { LoginComponent } from './login/login.component';
-import { SigninComponent } from './signin/signin.component';
 import { ContextResolver } from './shared/context-resolver.service';
 
 
@@ -20,10 +18,9 @@ export const routes: Routes = [
     loadChildren: './landing-page/landing-page.module#LandingPageModule',
     pathMatch: 'full'
   },
-  // Temporary page to control the app
   {
-    path: '_control',
-    loadChildren: './control/control.module#ControlModule'
+    path: '_login',
+    loadChildren: './first-login/first-login.module#FirstLoginModule'
   },
 
   // Home
