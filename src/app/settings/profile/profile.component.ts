@@ -12,6 +12,10 @@ import { ProfileService } from './../../profile/profile.service';
 })
 export class ProfileComponent implements OnInit {
 
+  firstLogin: boolean = false;
+  githubLinked: boolean = false;
+  openshiftLinked: boolean = false;
+
   constructor(
     private router: Router,
     public profile: ProfileService,
@@ -24,6 +28,10 @@ export class ProfileComponent implements OnInit {
 
   save() {
     this.profile.save().subscribe(val => console.log('Profile update'));
+  }
+
+  isComplete() {
+    return this.profile.sufficient && this.githubLinked && this.openshiftLinked;
   }
 
 }

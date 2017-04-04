@@ -18,10 +18,6 @@ export const routes: Routes = [
     loadChildren: './landing-page/landing-page.module#LandingPageModule',
     pathMatch: 'full'
   },
-  {
-    path: '_login',
-    loadChildren: './first-login/first-login.module#FirstLoginModule'
-  },
 
   // Home
   {
